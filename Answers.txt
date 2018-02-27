@@ -1,0 +1,24 @@
+1.) mysql> Select h2.name
+    -> From Highschooler h1, Highschooler h2, Friend f
+    -> Where h1.ID = f.ID1
+    -> AND h2.ID =f.ID2
+    -> AND h1.name = 'Gabriel';
+    
+2.) mysql> Select name, grade 
+    -> From Highschooler h
+    -> Where h.ID NOT IN (Select ID1 From Likes)
+    -> AND h.ID NOT IN (Select ID2 From Likes);
+    
+3.) mysql> Select h.name, h.grade
+    -> From Highschooler h, (Select l.ID2 From Likes l GROUP BY l.ID2 HAVING COUNT(l.ID2) > 1)sub 
+    -> Where h.ID = sub.ID2;
+    
+4.) mysql> Select h1.name, h1.grade, h2.name, h2.grade
+    -> From Highschooler h1, Highschooler h2, Likes l
+    -> Where h1.ID = l.ID1
+    -> AND h2.ID = l.ID2
+    -> AND (h1.grade-h2.grade)>=2;
+    
+8.) mysql> Select AVG(friends)
+    -> From (Select COUNT(h.ID) AS friends From Highschooler h, Friend f Where h.ID = f.ID1
+    -> GROUP BY h.ID)sub;
